@@ -68,6 +68,11 @@ class Dino extends Entity {
 			
 		}, 3)
 	}
+	
+	drop(){
+		this.y = 0
+		this.state = 'floating'
+	}
 
 	tick(ctx, height) {
 		this.draw(ctx, height)
@@ -81,14 +86,15 @@ class Cactus extends Entity {
 		super(82, 80, './assets/images/Goomba.png')
 		this.x = canWidth + 82
 	}
-    tick(ctx, canHeight) {
+    tick(ctx, canHeight, speed) {
         this.draw(ctx, canHeight)
-		this.move(-5)
+		this.move(speed)
 	}
 }
 
 window.addEventListener('load', () => {
 	let highscore = 0
+	let difficulty = -5
 	const startBtn = document.getElementById('start')
 	const restartBtn = document.getElementById('restart')
 	const scoreCounter = document.getElementById('score')
@@ -99,6 +105,7 @@ window.addEventListener('load', () => {
 	can.width = width
 	can.height = height
 	let dino, cactus
+	dino = new Dino()
 
 	function stop(){
 		restartBtn.classList.remove('is-hidden')
@@ -109,7 +116,6 @@ window.addEventListener('load', () => {
 	}
 
 	function run() {
-		dino = new Dino()
 		cactus = new Cactus(width)
 		scoreCounter.textContent = 0
 		startBtn.classList.add('is-hidden')
@@ -120,7 +126,7 @@ window.addEventListener('load', () => {
 		ctx.beginPath()
 		ctx.fillStyle = 'white'
 		ctx.fillRect(0, 0, width, height)
-        cactus.tick(ctx, height)
+        cactus.tick(ctx, height, difficulty-scoreCounter.textContent/10)
         dino.tick(ctx, height)
 		if((cactus.x+cactus.width/2 <=dino.x + dino.width && cactus.x+cactus.width/2 > dino.x) && dino.y <= cactus.height/2){
 			stop()
@@ -134,10 +140,16 @@ window.addEventListener('load', () => {
 	}
 
 	function handleKeyboard(event) {
+		console.log(event.code)
 		switch (event.code) {
 			case 'Space':
+			case 'KeyW':
 			case 'ArrowUp':
 				dino.jump()
+				break
+			case 'KeyS':	
+			case 'ArrowDown':
+				dino.drop()
 		}
 	}
 

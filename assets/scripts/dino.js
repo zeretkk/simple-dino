@@ -8,13 +8,13 @@ class Entity {
 	image
 	sprite
 
-	constructor(imageWidth, imageHeight, imagePath) {
-		this.image = new Image(imageWidth, imageHeight)
+	constructor(imagePath) {
+		this.image = new Image()
 		this.image.src = imagePath
-		this.width = imageWidth
-		this.height = imageHeight
 		this.image.onload = () => {
 			this.sprite = createImageBitmap(this.image)
+			this.width = this.image.width
+			this.height = this.image.height
 		}
 	}
 
@@ -41,7 +41,7 @@ class Dino extends Entity {
 	state = 'runing'
 
 	constructor() {
-		super(74, 96, './assets/images/mario.png')
+		super('./assets/images/mario.png')
 
 	}
 
@@ -83,7 +83,7 @@ class Dino extends Entity {
 
 class Cactus extends Entity {
 	constructor(canWidth) {
-		super(82, 80, './assets/images/Goomba.png')
+		super('./assets/images/Goomba.png')
 		this.x = canWidth + 82
 	}
     tick(ctx, canHeight, speed) {
@@ -140,7 +140,6 @@ window.addEventListener('load', () => {
 	}
 
 	function handleKeyboard(event) {
-		console.log(event.code)
 		switch (event.code) {
 			case 'Space':
 			case 'KeyW':

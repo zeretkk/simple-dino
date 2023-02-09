@@ -1,0 +1,28 @@
+@font-face {
+    font-family: 'PressStart 2P';
+    src: url('../fonts/PressStart2P-Regular.ttf')
+}
+body{
+    font-family: 'PressStart 2P';
+    height: 100vh;
+
+}
+.app{
+    height: 100vh;
+}
+.app__wrapper{
+    position: relative;
+}
+#dino{
+    width: 100%;
+    max-height: 400px;
+}
+#restart, #start{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.is-hidden{
+    display: none;
+}
